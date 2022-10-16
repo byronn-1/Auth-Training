@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from "react";
-// import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import { useToken } from "../auth/useToken";
+import { useUser } from "../auth/useUser";
+
+import axios from "axios";
 
 export function UserInfoPage() {
+
+    //this will get us the user info from the token in local storage
+    const user = useUser();
+    //used to update the token
+    const [token, setToken] = useToken();
+
+    const { id, email, info } = user;
   // We'll use the history to navigate the user
   // programmatically later on (we're not using it yet)
-  // const history = useNavigate();
+  const history = useNavigate();
 
   // These states are bound to the values of the text inputs
   // on the page (see JSX below).
-  const [favoriteFood, setFavoriteFood] = useState("");
-  const [hairColor, setHairColor] = useState("");
-  const [bio, setBio] = useState("");
+  const [favoriteFood, setFavoriteFood] = useState(info.favoriteFood || '');
+  const [hairColor, setHairColor] = useState(info.hairColor || '');
+  const [bio, setBio] = useState(info.bio || '');
 
   // These state variables control whether or not we show
   // the success and error message sections after making
@@ -34,7 +46,20 @@ export function UserInfoPage() {
     // Send a request to the server to
     // update the user's info with any changes we've
     // made to the text input values
-    alert("Save functionality not implemented yet");
+      try {
+          const response = await axios.put(`/api/users/${id}`, {
+          favoriteFood,
+          hairColor,
+          bio
+      }, {
+          headers: { Authorization: `Bearer ${token}` }
+          });
+          const { token: newToken } = response.data;
+          setToken(newToken);
+          setShowSuccessMessage(true);
+      } catch (error) {
+          setShowErrorMessage(true);
+      }
   };
 
   const logOut = () => {
@@ -46,7 +71,9 @@ export function UserInfoPage() {
   const resetValues = () => {
     // Reset the text input values to
     // their starting values (the data we loaded from the server)
-    alert("Reset functionality not implemented yet");
+      setFavoriteFood(info.favoriteFood);
+      setHairColor(info.hairColor);
+      setBio(info.bio);
   };
 
   // And here we have the JSX for our component. It's pretty straightforward
@@ -55,7 +82,7 @@ export function UserInfoPage() {
       <button onClick={saveChanges}>Save Changes</button>
       <button onClick={resetValues}>Reset Values</button>
       <button onClick={logOut}>Log Out</button>
-      <h1>Info for ______</h1>
+          <h1>Info for {email}</h1>
       {showSuccessMessage && (
         <div className="success">Successfully saved user data!</div>
       )}

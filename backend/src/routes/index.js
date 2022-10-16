@@ -1,9 +1,12 @@
 import { testRoute } from './testRoute';
 import { signUpRoute } from './signUpRoute';
-import { logInRoute } from '../../../frontend/src/pages/LoginPage';
+import { logInRoute } from './loginRoute';
+import { updateUserInfoRoute } from './updateUserInfoRoute';
 
 export const routes = [
     testRoute,
     signUpRoute,
-    logInRoute
+    logInRoute,
+    updateUserInfoRoute
+
 ];
