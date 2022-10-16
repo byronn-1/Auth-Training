@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { axios } from 'axios';
+
+import { useToken } from '../auth/useToken';
+
 export const SignupPage = () => {
+
+    const [token, setToken] = useToken();
 
     const [emailValue, setEmailValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
@@ -13,7 +19,14 @@ export const SignupPage = () => {
     const navigate = useNavigate();
 
     const onSignUpClicked = async () => {
-        alert('Sign Up not implemented yet');
+        const response = await axios.post('/api/signup', {
+            email: emailValue,
+            password: passwordValue,
+        });
+
+        const { token } = response.data
+        setToken(token);
+        window.history.pushState('/');
     }
 
     return (
