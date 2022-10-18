@@ -84,6 +84,7 @@ export function UserInfoPage() {
       <button onClick={resetValues}>Reset Values</button>
       <button onClick={logOut}>Log Out</button>
           <h1>Info for {email}</h1>
+          {!isVerified && <div className="fail" >You wont be able to make any changes until you verify your email</div>}
       {showSuccessMessage && (
         <div className="success">Successfully saved user data!</div>
       )}

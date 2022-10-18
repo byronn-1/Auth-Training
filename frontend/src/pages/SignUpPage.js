@@ -26,7 +26,7 @@ export const SignupPage = () => {
 
         const { token } = response.data
         setToken(token);
-        window.history.pushState('/');
+        window.history.pushState('/please-verify');
     }
 
     return (

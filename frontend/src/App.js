@@ -3,6 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import { UserInfoPage } from "./pages/UserInfoPage";
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from "./pages/SignUpPage";
+import { PleaseVerifyEmailPage } from "./pages/PleaseVerifyEmailPage";
+import { EmailVerificationLandingPage } from "./pages/EmailVerificationLandingPage";
+
 
 import { PrivateRoute } from './auth/PrivateRoute';
 
@@ -20,7 +23,8 @@ import { PrivateRoute } from './auth/PrivateRoute';
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-
+        <Route path="/please-verify" element={<PleaseVerifyEmailPage />} />
+        <Route path="/verify-email/:verificationString" element={<EmailVerificationLandingPage />} />
       </Routes>
     </div>
   );
