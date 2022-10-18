@@ -9,8 +9,8 @@ export const PleaseVerifyEmailPage = () => {
 
         setTimeout(() => {
             navigate('/');
-        }, 3000)
-    }, [navigate])
+        }, 3000);
+    }, [navigate]);
 
     return (
         <div className="content-container">
